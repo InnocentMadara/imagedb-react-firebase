@@ -1,0 +1,68 @@
+@import "./Vars.scss";
+@import "./Fonts.scss";
+
+.login{
+
+  &__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  &__input{
+    padding: 20px;
+
+    width: 100%;
+    border: 5px solid $grey;
+    border-radius: 10px;
+    
+    font-size: 20px;
+    font-family: "Lato";
+    color: $black;
+    
+    transition: border-color 0.3s;
+    
+    &:focus{
+      border-color: $lightbrown;
+      outline: none;
+      &::placeholder{
+        color: transparent;
+      }
+    }
+  }
+  &__email-input{
+
+  }
+  &__password-input{
+
+  }
+  &__button{
+    border: 5px solid $grey;
+  border-radius: 10px;
+  width: 100%;
+
+  padding: 20px;
+  background: $white;
+  
+  font-size: 20px;
+  font-family: "Lato";
+  color: $grey;
+  cursor: pointer;
+
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+  &:hover{
+    background: $lightbrown;
+    color: $white;
+    border-color: $lightbrown;
+
+    outline: 0;
+  }
+  }
+  &__signup-button{
+
+  }
+  &__logout-button{
+
+  }
+}

@@ -1,0 +1,133 @@
+@import '../../Styles/Fonts.scss';
+@import '../../Styles/Vars.scss';
+
+.selected{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 26px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.imageWrapper{
+  display: flex;
+  
+  .selected[align="vertical"] &{
+    flex-direction: column;
+  }
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.image{
+  height: 100%; 
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  height: min(calc(90vh - 155px), 100vw);
+  max-width: 80%;
+  // flex: 0 0 100%;
+}
+.textBlock{
+  flex: 0 1 100%;
+
+  .selected[align="vertical"] &{
+    margin-top: 40px;
+  }
+  @media (max-width: 767px) {
+    margin-top: 40px;
+  }
+}
+.titleBlock{
+  display: flex;
+  position: relative;
+}
+.title{
+  min-width: 180px;
+  align-self: flex-end;
+  padding: 0 20px;
+  color: $lightbrown;
+  font-size: 27px;
+  font-family: "Lato";
+  font-weight: 400;
+  padding-bottom: 20px;
+  @media (max-width: 767px) {
+    align-self: center;
+  }
+}
+.editTitle{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  padding: 0 10px;
+  color: $lightbrown;
+  font-size: 27px;
+  font-family: "Lato";
+}
+.descriptionBlock{
+  display: flex;
+  position: relative;
+}
+.description{
+  font-size: 20px;
+  font-family: "Lato";
+  color: $grey;
+  padding: 0 10px;
+  white-space: pre-wrap;
+  padding-bottom: 10px;
+}
+.editDescription{
+  resize: none;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  font-size: 20px;
+  font-family: "Lato";
+  color: $grey;
+  padding: 0 10px;
+  white-space: pre-wrap;
+}
+.buttonBlock{
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 100;
+  button{
+    display: inline-block;
+    font-size: 20px;
+    padding: 10px;
+  }
+}
+
+.controls{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+  align-self: stretch;
+}
+.button{
+  height: 40px;
+  width: 80px;
+  font-size: 14px;
+  border: 0;
+  border-top: 1px solid $grey;
+  color: $grey;
+  background: none; 
+  font-family: "Lato";
+  
+  transition: color 0.3s, border 0.3s;
+  &:hover{
+    cursor: pointer;
+  }
+}

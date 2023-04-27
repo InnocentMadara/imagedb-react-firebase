@@ -1,0 +1,34 @@
+@import 'Vars.scss';
+@import 'Fonts.scss';
+
+.art{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  &__item-block{
+    width: 100%;
+    max-width: 100vw;
+  }
+  &__item{
+    &:visited{
+      color: inherit;
+    }
+  }
+  &__image{
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  &__title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nobel Book";
+    padding: 20px 0;
+    font-size: 30px;
+    color: $black;
+  }
+}

@@ -1,0 +1,14 @@
+@import './Vars.scss';
+@import './Fonts.scss';
+
+.footer{
+  padding: 110px 0 50px;
+
+  margin-top: auto;
+
+  &__text{
+    font-family: "Input Mono";
+    font-size: 11px;
+    color: $lightbrown;
+  }
+}

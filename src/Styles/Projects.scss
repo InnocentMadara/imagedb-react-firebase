@@ -1,0 +1,26 @@
+@import './Vars.scss';
+@import './Fonts.scss';
+
+.projects{
+  display: flex;
+  flex-direction: column;
+  
+  &__header{
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding: 20px 40px;
+    
+    a{
+      color: $grey;
+      font-family: "Jost";
+
+      transition: color 0.3s;
+      font-size: 20px;
+      &:hover,
+      &:focus{
+        color: $lightbrown;
+      }
+    }
+  }
+}

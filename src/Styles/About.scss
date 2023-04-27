@@ -1,0 +1,25 @@
+@import "./Vars.scss";
+@import "./Fonts.scss";
+
+.about{
+
+  &__container{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+  &__image{
+    max-width: 500px;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
+  &__text{
+    font-family: "Lato";
+    color: $grey;
+    font-size: 18px;
+    max-width: 500px;
+  }
+}

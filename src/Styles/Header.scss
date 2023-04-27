@@ -1,0 +1,152 @@
+@import './Vars.scss';
+@import './Fonts.scss';
+
+.header{
+  display: flex;
+  align-items: center;
+
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  
+  padding: 40px;
+  
+  transition: transform 0.3s;
+  
+  &[is-hidden]{
+    transform: translateY(-100%);
+  }
+
+
+  &__burger-button{
+    overflow: hidden;
+    visibility: hidden;
+    cursor: pointer;
+    margin-left: auto;  
+    width: 30px;
+    height: 30px;
+    @media (max-width: 767px) {
+      visibility: visible;
+    }
+    &-container{
+      position: relative;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+
+      transition: transform 0.3s;
+      
+      body[mobile-menu-active] &{
+        transform: translateY(-100%);
+      }
+    }
+    &--inactive{
+      min-width: 100%;
+      min-height: 100%;
+    }
+    &--active{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  }
+  
+  &__navigation{
+    display: flex;
+    column-gap: 40px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: auto;
+    align-items: center;
+
+    @media (max-width: 767px) {
+      position: fixed;
+      width: 100%; 
+      height: 100vh;
+      padding-top: 100px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      z-index: -1;
+      background: rgba($color: #fff, $alpha: 0.95);
+      transform: translateY(-100vh);
+
+      row-gap: 40px;
+
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-y: auto;
+
+      body[mobile-menu-active] &{
+        transform: translateY(0);
+      }
+    }
+    
+    & .header__link{
+      font-size: 26px;
+      color: $grey;
+
+      &[active]{
+        color: $lightbrown;
+      }
+      
+      &:hover{
+        color: $lightbrown;
+      }
+      @media (max-width: 1000px) {
+        font-size: 20px;
+      }
+      @media (max-width: 767px) {
+        font-size: 35px;
+      }
+      @media (max-width: 500px) {
+        font-size: 28px;
+      }
+    }
+  }
+  &__social{
+    & svg{
+      width: 14px;
+      height: 14px;
+
+      @media (max-width: 767px) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  &__link{
+    transition: color 0.3s;
+    font-family: "Jost";
+    white-space: nowrap;
+  }
+  &__logo{
+    font-size: 52px;
+    margin-right: 40px;
+    color: $black;
+
+    @media (max-width: 500px) {
+      font-size: 30px;
+    }
+  }
+  &__upload{
+  }
+  &__portraits{
+
+  }
+  &__info{
+
+  }
+}
+
+body[mobile-menu-active]{
+  overflow-y: hidden;
+}

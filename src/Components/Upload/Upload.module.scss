@@ -1,0 +1,92 @@
+@import '../../Styles/Vars.scss';
+@import '../../Styles/Fonts.scss';
+
+.mainBlock{
+  width: 40vw;
+  margin: auto;
+  padding: 20px;
+  border: 5px solid $grey;
+  border-radius: 20px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.textInput{
+  padding: 20px;
+
+  width: 100%;
+  border: 5px solid $grey;
+  border-radius: 10px;
+  
+  font-size: 20px;
+  font-family: "Lato";
+  color: $black;
+  
+  transition: border-color 0.3s;
+  
+  &:focus{
+    border-color: $lightbrown;
+    outline: none;
+    &::placeholder{
+      color: transparent;
+    }
+  }
+}
+.textareaInput{
+  padding: 20px;
+  width: 100%;
+  height: 200px;
+  border: 5px solid $grey;
+  border-radius: 10px;
+  resize: none;
+
+  font-size: 16px;
+  font-family: "Lato";
+  color: $black;
+
+  transition: border-color 0.3s;
+  &:focus{
+    border-color: $lightbrown;
+    outline: none;
+    &::placeholder{
+      color: transparent;
+    }
+  }
+}
+.fileInput{
+  display: none;
+}
+.label{
+  text-align: center;
+}
+.imageName{
+  color: $grey;
+  font-family: "Lato";
+  font-size: 20px;
+  text-align: center;
+}
+.button{
+  border: 5px solid $grey;
+  border-radius: 10px;
+  width: 100%;
+
+  padding: 20px;
+  background: $white;
+  
+  font-size: 20px;
+  font-family: "Lato";
+  color: $grey;
+  cursor: pointer;
+
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+  &:hover{
+    background: $lightbrown;
+    color: $white;
+    border-color: $lightbrown;
+
+    outline: 0;
+  }
+}

@@ -1,0 +1,54 @@
+@import './Fonts.scss';
+@import './Vars.scss';
+
+.contact{
+
+  &__container{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  &__text-block{
+    position: relative;
+  }
+  &__text{
+    color: $grey;
+    font-family: "Lato";
+    font-size: 18px;
+
+    white-space: pre-wrap;
+  }
+  &__link{
+    color: $grey;
+    &:visited{
+      color: $grey;
+    }
+    &:hover{
+      color: $lightbrown;
+    }
+  }
+
+  &__input{
+    color: $grey;
+    font-family: "Lato";
+    font-size: 18px;
+    
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    resize: vertical;
+  }
+  &__buttons{
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 100;
+    button{
+      display: inline-block;
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
+}
