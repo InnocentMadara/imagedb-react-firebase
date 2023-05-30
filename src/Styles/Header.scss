@@ -11,7 +11,7 @@
   left: 0;
   right: 0;
   
-  padding: 40px;
+  padding: 30px 40px;
   
   transition: transform 0.3s;
   
@@ -58,7 +58,7 @@
   
   &__navigation{
     display: flex;
-    column-gap: 40px;
+    column-gap: 20px;
     flex-wrap: wrap;
     justify-content: flex-end;
     margin-left: auto;
@@ -77,7 +77,7 @@
       background: rgba($color: #fff, $alpha: 0.95);
       transform: translateY(-100vh);
 
-      row-gap: 40px;
+      row-gap: 30px;
 
       flex-direction: column;
       justify-content: start;
@@ -125,11 +125,11 @@
   }
   &__link{
     transition: color 0.3s;
-    font-family: "Jost";
+    font-family: "Telefon Normal";
     white-space: nowrap;
   }
   &__logo{
-    font-size: 52px;
+    font-size: 56px;
     margin-right: 40px;
     color: $black;
 

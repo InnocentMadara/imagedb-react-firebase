@@ -109,6 +109,7 @@ function App() {
     <>
       <header ref={header} className="header">
         <Link to="/" className='header__logo header__link'> Alex Kutsalo </Link>
+        
         <div onClick={(e)=>{toggleMenu(e)}} className="header__burger-button">
           <div className="header__burger-button-container">
             <div className="header__burger-button--inactive">
@@ -133,6 +134,7 @@ function App() {
             </a>
           </div>
         </nav>
+        
       </header>
       <Routes>
         <Route path="/" element={<Main isEdit={isEdit} />} ></Route>

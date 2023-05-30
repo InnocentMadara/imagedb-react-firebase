@@ -118,16 +118,18 @@
 }
 .button{
   height: 40px;
-  width: 80px;
-  font-size: 14px;
+  width: 60px;
+  font-size: 12px;
   border: 0;
-  border-top: 1px solid $grey;
-  color: $grey;
+  border-top: 1px solid rgba($grey, 0.6);
+  color: rgba($grey, 0.6);
   background: none; 
   font-family: "Lato";
   
   transition: color 0.3s, border 0.3s;
   &:hover{
     cursor: pointer;
+    border-top: 1px solid rgba($grey, 1);
+    color: rgba($grey, 1);
   }
 }
