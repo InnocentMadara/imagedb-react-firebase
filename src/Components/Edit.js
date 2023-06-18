@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react'
-import { getInfo, updateInfo } from './firebase'
-import { Card, CardActionArea, CardMedia, Typography, Button, Grid, CardContent, Box } from '@mui/material';
+import { getInfo, updateInfo, updateOrder } from './firebase'
+import { Card, CardActionArea, CardMedia, Typography, Button, Grid, CardContent, Box, Stack } from '@mui/material';
 import Masonry from 'react-masonry-css';
 import "../Styles/Edit.scss"
 import { Link } from 'react-router-dom';
@@ -32,8 +32,8 @@ export default function Edit() {
 
     getInfo("/", db=>{
       let posts, count;
-      if(db.posts){ 
-        posts = db.posts;
+      if(db.Posts){
+        posts = db.Posts;
         count = Object.values(posts).length;
       }
       else(
@@ -43,6 +43,26 @@ export default function Edit() {
         setValue(value+1);
       });
     })
+  }
+
+  const updateOrderHandler = (e, direction, post, posts) => {
+    if(direction==="left"){
+      updateOrder(`Posts`, `post_${posts.find(pst=>pst.order===post.order-1).uid}`, post.order,()=>{
+        updateOrder(`Posts`, `post_${post.uid}`, post.order-1, ()=>{
+          setValue(value+1);
+        })
+      })
+    }
+    else if(direction==="right"){
+      updateOrder(`Posts`, `post_${posts.find(pst=>pst.order===post.order+1).uid}`, post.order,()=>{
+        updateOrder(`Posts`, `post_${post.uid}`, post.order+1, ()=>{
+          setValue(value+1);
+        })
+      })
+    }
+    else{
+      console.log("error")
+    }
   }
 
 
@@ -55,7 +75,9 @@ export default function Edit() {
       columnClassName="masonry__column"
       >
         {
-          Object.values(posts).map((post, index)=>{
+          Object.values(posts)
+          .sort((pst1, pst2)=>pst1.order-pst2.order)
+          .map((post, index)=>{
             return (
               <Card key={index}>
                 <Link to={`/edit/${post.uid}`}>
@@ -73,6 +95,11 @@ export default function Edit() {
                     </p>
                   </CardContent>
                 </Link>
+                <Stack direction="row" sx={{justifyContent: "space-between", alignItems: "center"}}>
+                  <Button onClick={e=>{updateOrderHandler(e, "left", post, Object.values(posts) )}} disabled={post.order===1} variant='contained' >←</Button>
+                  <h2 class="title">№{post.order}</h2>
+                  <Button onClick={e=>{updateOrderHandler(e, "right", post, Object.values(posts) )}} disabled={post.order===Object.values(posts).length} variant='contained' >→</Button>
+                </Stack>
               </Card>
             )
           })

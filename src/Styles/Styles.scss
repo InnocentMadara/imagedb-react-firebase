@@ -34,10 +34,19 @@ img{
   color: black;
 }
 textarea{
-  padding: 4px;
+  line-height: 1.6;
+  padding: 0 4px;
   border: 2px solid #000;
   border-radius: 4px;
   resize: none;
+  flex: 0 1 100%;
+}
+
+.save-button{
+  background: white;
+  border: 2px solid #000;
+  border-radius: 4px;
+  padding: 2px 8px;
 }
 
 .container{
@@ -50,6 +59,17 @@ textarea{
 .text{
   font-family: "Open sans";
   font-size: 14px;
+  color: black;
+}
+
+.file-input__text{
+  background: #33b249;
+  color: white;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
 }
 
 .masonry{
@@ -253,8 +273,20 @@ textarea{
     font-size: 17px;
     margin-bottom: 8px;
   }
-  &__description {
-    font-family: "Open sans";
-    font-size: 14px;
+  &__text{
+    white-space: pre-wrap;
+    &.title{
+      margin-top: 35px;
+    }
+    &.text{
+      margin-top: 25px;
+    }
+  }
+}
+
+.edit-post__container{
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    row-gap: 60px;
   }
 }

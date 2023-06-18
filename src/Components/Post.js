@@ -44,9 +44,17 @@ export default function Post() {
           <h2 className="post__name">
             {post.name}
           </h2>
-          <p className="post__description">
-            {post.description}
-          </p>
+          <div className="post__texts">
+            {
+              post.texts && Object.values(post.texts)
+              .sort((txt1, txt2)=>txt1.order-txt2.order)
+              .map((text, index)=>{ return(
+                <p key={text.uid} className={"post__text "+text.type}>
+                  {text.content}
+                </p>)
+              })
+            }
+          </div>
         </div>
       </div>
     </article>
