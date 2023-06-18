@@ -1,0 +1,13 @@
+@import "./Vars.scss";
+@import "./Fonts.scss";
+
+.edit{
+  display: flex;
+  justify-content: center;
+
+  &__container{
+    max-width: 1300px;
+    margin: 40px;
+    width: 100%;
+  }
+}

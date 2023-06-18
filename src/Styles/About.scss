@@ -2,24 +2,47 @@
 @import "./Fonts.scss";
 
 .about{
-
+  display: flex;
+  justify-content: center;
   &__container{
+    margin: 50px 80px 0 80px;
+    max-width: 1300px;
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 100px;
+    align-items: flex-start;
+    // padding: 50px;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      // padding: 20px;
+      align-items: center;
+    }
   }
   &__image{
-    max-width: 500px;
     display: block;
     object-fit: cover;
     width: 100%;
     height: auto;
+    flex: 0 0 46%;
+    @media (max-width: 1024px) {
+      flex: 0 0 auto;
+    }
+  }
+  &__text-block{
+    display: flex;
+    flex-direction: column;
+  }
+  &__title{
+    line-height: 1;
+    font-family: "Oswald";
+    text-transform: uppercase;
+    font-size: 85px;
+    margin-bottom: 64px;
   }
   &__text{
-    font-family: "Lato";
+    font-family: "Open sans";
     color: $grey;
     font-size: 18px;
-    max-width: 500px;
   }
 }

@@ -79,6 +79,14 @@ export function uploadImageMain(location, imageUrl, name, object, callback = () 
   addToDatabase(imageUrl, location, name);
 }
 
+// export function addToDB (location, image, name, callback) {
+//   const imageRef = refSt(storage, `Images${location}/${name}`);
+//   uploadBytes(imageRef, image).then(()=>{
+//     getDownloadURL(imageRef).then(imageUrl=>{
+//       callback(imageUrl);
+//     });
+//   });
+// }
 
 export function updateOrder(location, name, order, callback = ()=>{}){
   const databaseRef = ref(database, `${location}/${name}/order`);
@@ -93,6 +101,10 @@ export function removeImage(databaseLocation, storageLocation, callback = ()=>{}
   });
 }
 
+export function removeImageFromSt(storageLocation){
+  deleteObject(refSt(storage, storageLocation));
+}
+
 export function removeImageMain(databaseLocation, callback = ()=>{}){
   remove(ref(database, databaseLocation)).then((promise)=>{
     callback(promise);  
@@ -103,6 +115,22 @@ export function updateInfo(location, info, callback = ()=>{}){
   set( ref(database, location), info).then((promise)=>{callback(promise)});
 }
 
-// export function updateKey(location, info, callback = () => {}){
-//   update(ref(database, location), info).then((promise)=>{callback(promise)});
-// }
+export function uploadImageSt(location, image, postUid, imageUid, order, callback = () => {}){
+  const addToDatabase = (imageUrl, name) => {
+    const databaseRef = ref(database, `Posts/${postUid}/images/image_${name}`);
+    set( databaseRef, {url: imageUrl, uid: imageUid, order: order})
+  }
+  const imageRef = refSt(storage, `${location}/${imageUid}`);
+  uploadBytes(imageRef, image).then(()=>{
+    getDownloadURL(imageRef).then(imageUrl=>{
+      addToDatabase(imageUrl, imageUid);
+      callback(imageUrl);
+    });
+  });
+}
+
+export function removeInfo (location, callback = () => {}){
+  remove(ref(database, location)).then((promise)=>{
+    callback(promise);  
+  });
+}

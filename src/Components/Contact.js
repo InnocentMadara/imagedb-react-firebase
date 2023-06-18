@@ -49,7 +49,10 @@ export default function Contact(props) {
             buttons.current.hidden = true;
           }}>✗</button>
         </div>
-
+        <a href="mailto:kutsalo@gmail.com" className='contact__link contact__text'>kutsalo@gmail.com</a>
+        <a href="https://instagram.com/alexkutsalo?igshid=YmMyMTA2M2Y=" className="contact__link contact__text" target='_blank'>
+          Instagram
+        </a>
       </div>
       </div>
     </section>
