@@ -129,6 +129,21 @@ export function uploadImageSt(location, image, postUid, imageUid, order, callbac
   });
 }
 
+export function uploadImageAbout(location, image, imageUid, callback = () => {}){
+  const addToDatabase = (imageUrl, name) => {
+    const databaseRef = ref(database, location);
+    set( databaseRef, {url: imageUrl, uid: imageUid})
+  }
+  const imageRef = refSt(storage, `Images/${imageUid}`);
+  uploadBytes(imageRef, image).then(()=>{
+    getDownloadURL(imageRef).then(imageUrl=>{
+      addToDatabase(imageUrl, imageUid);
+      callback(imageUrl);
+    });
+  });
+
+}
+
 export function removeInfo (location, callback = () => {}){
   remove(ref(database, location)).then((promise)=>{
     callback(promise);  

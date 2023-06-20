@@ -12,10 +12,8 @@
     flex-direction: row;
     gap: 100px;
     align-items: flex-start;
-    // padding: 50px;
     @media (max-width: 1024px) {
       flex-direction: column;
-      // padding: 20px;
       align-items: center;
     }
   }
@@ -25,7 +23,9 @@
     width: 100%;
     height: auto;
     flex: 0 0 46%;
+    max-width: 600px;
     @media (max-width: 1024px) {
+      max-width: 867px;
       flex: 0 0 auto;
     }
   }
@@ -44,5 +44,8 @@
     font-family: "Open sans";
     color: $grey;
     font-size: 18px;
+  }
+  &__textarea.text{
+    font-size: 18px; 
   }
 }

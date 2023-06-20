@@ -29,21 +29,7 @@
     margin-top: 27px;
     font-family: "Input Mono";
     font-size: 11px;
-    color: $lightbrown;
+    color: $black;
     text-align: center;
-  }
-  &__circle{
-    pointer-events: none;
-    width: 800px;
-    height: 400px;
-    border-top-left-radius: 400px;
-    border-top-right-radius: 400px;
-    display: block;
-    border: 1px solid $black;
-    border-bottom: 0;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
