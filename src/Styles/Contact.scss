@@ -33,6 +33,11 @@
     }
   }
 
+  &__svg{
+    width: 32px;
+    height: auto;
+  }
+
   &__input{
     color: $grey;
     font-family: "Lato";

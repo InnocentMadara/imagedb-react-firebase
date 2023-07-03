@@ -115,9 +115,9 @@ export function updateInfo(location, info, callback = ()=>{}){
   set( ref(database, location), info).then((promise)=>{callback(promise)});
 }
 
-export function uploadImageSt(location, image, postUid, imageUid, order, callback = () => {}){
+export function uploadImageSt(location, image, postUid, subpostUid , imageUid, order, callback = () => {}){
   const addToDatabase = (imageUrl, name) => {
-    const databaseRef = ref(database, `Posts/${postUid}/images/image_${name}`);
+    const databaseRef = ref(database, `Posts/post_${postUid}/subposts/subpost_${subpostUid}/images/image_${name}`);
     set( databaseRef, {url: imageUrl, uid: imageUid, order: order})
   }
   const imageRef = refSt(storage, `${location}/${imageUid}`);

@@ -10,7 +10,6 @@ export default function About() {
   useMemo(()=>{
     getInfo("About/", (data)=>{
       setData(data);
-      console.log(data);
     })
   },[value])
 

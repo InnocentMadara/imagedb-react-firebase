@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useMemo, useRef, useState } from 'react';
-import { getPosts, getInfo } from './firebase';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { getInfo } from './firebase';
 import Masonry from 'react-masonry-css';
 import { Link } from 'react-router-dom';
 import '../Styles/Main.scss';
@@ -7,9 +7,7 @@ import '../Styles/Main.scss';
 let postsDOM = [];
 
 export default function Main(props) {
-  const isEdit = props.isEdit;
   const [value, setValue] = useState(0);
-  const [scroll, setScroll] = useState(0);
 
   useEffect(()=>{
     window.dispatchEvent(new Event("resize"));
@@ -17,10 +15,7 @@ export default function Main(props) {
 
   let imagesLoaded = 0;
   
-  
-  const location = "/Main"
   const [images, setImages] = useState([]);
-  const [selectedId, setSelectedId] = useState(0);
   const [posts, setPosts] = useState({});
 
   let masonryRef = useRef(null);
@@ -68,23 +63,24 @@ export default function Main(props) {
   window.addEventListener("resize", setPostsArray)
   window.addEventListener("scroll", setParallaxStyles)  
 
-
-  const postsList = Object.values(posts).map((post, index)=>{
+  
+  const postsList = Object.values(posts)
+  .sort((post1, post2)=>post1.order-post2.order)
+  .map((post, index)=>{
     return (
       <Link
         className="post-preview masonry__item"
-        to={`/${post.uid}`}
+        to={`/${post. uid}/${
+          post.subposts ?
+          Object.values(post.subposts).length > 1 ? "" : Object.values(post.subposts)[0].uid
+          : ""
+        }`}
         key={index}
         ref={addToRefs}
         >
-        <img className="post-preview__image" onLoad={()=>{
-          imagesLoaded++;
-          if(imagesLoaded <= Object.values(images).length){
-            window.dispatchEvent(new Event("resize"));
-          }
-          }} src={
-            post.images ?
-            Object.values(post.images).find(img=>img.order===1).url:
+        <img className="post-preview__image" src={
+            post.subposts && Object.values(post.subposts).find(subpost=>subpost.order===1).images ?
+            Object.values(Object.values(post.subposts).find(subpost=>subpost.order===1).images).find(img=>img.order===1).url:
             require("../Images/MissingImage.png")}
           alt={`main ${post.name}`} />
           <h2 className="post-preview__name">

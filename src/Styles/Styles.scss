@@ -62,6 +62,10 @@ textarea{
   color: black;
 }
 
+svg{
+  display: block;
+}
+
 .file-input__text{
   background: #33b249;
   color: white;
@@ -76,7 +80,7 @@ textarea{
   padding-bottom: 20px;
 
   display: flex;
-  width: auto;
+  width: 100%;
   &__column{
     background-clip: padding-box;
 

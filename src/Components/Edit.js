@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import { getInfo, removeImageFromSt, updateInfo, updateOrder, uploadImageAbout } from './firebase'
-import { Card, CardActionArea, CardMedia, Typography, Button, Grid, CardContent, Box, Stack } from '@mui/material';
+import { Card, CardMedia, Typography, Button, CardContent, Box, Stack } from '@mui/material';
 import Masonry from 'react-masonry-css';
 import "../Styles/Edit.scss"
 import { Link } from 'react-router-dom';
@@ -19,22 +19,21 @@ export default function Edit() {
     })
     getInfo("/", (db)=>{
       setAbout(db.About);
-      setContact(db.Contact)
+      setContact(db.Contact);
     })
   },[value])
 
   let postPattern = (uid, order) => { return {
       uid: uid,
       name: "New post",
-      description: "description for new post",
       order: order,
-      images: {
+      subposts:{
+
       }
     }
   }
 
   useEffect(()=>{
-    
     const tx = Array.from(document.getElementsByTagName("textarea"));
     tx.forEach((textarea)=>{
       textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
@@ -144,85 +143,123 @@ export default function Edit() {
     updateInfo(`${directory}/text`, text, ()=>{setValue(value+1)})
   }
 
+  const setSocialLinkHandler = (e, location) => {
+    let link = e.target.parentElement.querySelector("input").value;
+    updateInfo(`Contact/links/${location}`, link, ()=>{setValue(value+1)});
+  }
+ 
   return (
     <section className='edit'>
-    <div className="edit__container">
+      <div className="edit__container">
 
-      <h2 className="edit__about-title title">About</h2>
-      <div className="edit__about" style={{marginBottom: "40px"}}>
-        <Stack direction="row" spacing={2} sx={{alignItems: "flex-start"}}>
-          <div style={{display: "flex", flexDirection: "column", rowGap: "20px", maxWidth: "800px"}} className="edit-post__upload-image">
-            <label className="edit__about-file-input file-input">
-              <p className='file-input__text'>📥 Choose an image...</p>
-              <input hidden className='inputfile' type="file" onChange={e=>{imageHandler(e, 867)}} accept="image/*"/>
-            </label>
-            <Button variant="contained" onClick={e=>{uploadImageHandler(e)}}>Replace image</Button>
-          </div>
-          {Object.values(about).length > 0 &&
-            <Stack direction="row" spacing={2} sx={{alignItems: "center", width: "100%"}}>
-            <textarea className="text about__textarea" defaultValue={about.text }></textarea>
-            <Button onClick={e=>{setDescriptionHandler(e, "about__textarea", "About")}} variant="contained">Set description</Button>
-          </Stack>}
-        </Stack>
-      </div>
-      <h2 className="edit__contact-title title">Contact</h2>
-      <div className="edit__contact" style={{marginBottom: "40px"}}>
-      {Object.values(contact).length > 0 &&
-            <Stack direction="row" spacing={2} sx={{alignItems: "center", width: "100%"}}>
+        <h2 className="edit__about-title title">About</h2>
+        <div className="edit__about" style={{marginBottom: "40px"}}>
+          <Stack direction="row" spacing={2} sx={{alignItems: "flex-start"}}>
+            <div style={{display: "flex", flexDirection: "column", rowGap: "20px", maxWidth: "800px"}} className="edit-post__upload-image">
+              <label className="edit__about-file-input file-input">
+                <p className='file-input__text'>📥 Choose an image...</p>
+                <input hidden className='inputfile' type="file" onChange={e=>{imageHandler(e, 867)}} accept="image/*"/>
+              </label>
+              <Button variant="contained" onClick={e=>{uploadImageHandler(e)}}>Replace image</Button>
+            </div>
+            {Object.values(about).length > 0 &&
+              <Stack direction="row" spacing={2} sx={{alignItems: "center", width: "100%"}}>
+              <textarea className="text about__textarea" defaultValue={about.text }></textarea>
+              <Button onClick={e=>{setDescriptionHandler(e, "about__textarea", "About")}} variant="contained">Set description</Button>
+            </Stack>}
+          </Stack>
+        </div>
+
+        <h2 className="edit__contact-title title">Contact</h2>
+        {Object.values(contact).length > 0 &&
+        <Stack spacing={2} className="edit__contact" sx={{marginBottom: "40px"}}>
+          <Stack direction="row" spacing={2} sx={{alignItems: "center", width: "100%"}}>
             <textarea className="text contact__textarea" defaultValue={contact.text }></textarea>
             <Button onClick={e=>{setDescriptionHandler(e,"contact__textarea" , "Contact")}} variant="contained">Set description</Button>
-          </Stack>}
-      </div>
-      <h2 className="title">Main</h2>
-      <Masonry 
-      breakpointCols={{default: 3, 769: 2, 681: 1}}
-      className="edit__masonry masonry"
-      columnClassName="masonry__column"
-      >
-        {
-          Object.values(posts)
-          .sort((pst1, pst2)=>pst1.order-pst2.order)
-          .map((post, index)=>{
-            return (
-              <Card key={index}>
-                <Link to={`/edit/${post.uid}`}>
-                  <CardMedia
-                    component="img"
-                    image={
-                      post.images ?
-                      Object.values(post.images).find(img=>img.order===1).url:
-                      require("../Images/MissingImage.png")
-                    }
-                  />
-                  <CardContent>
-                    <p className='title'>
-                      {post.name}
-                    </p>
-                  </CardContent>
-                </Link>
-                <Stack direction="row" sx={{justifyContent: "space-between", alignItems: "center"}}>
-                  <Button onClick={e=>{updateOrderHandler(e, "left", post, Object.values(posts) )}} disabled={post.order===1} variant='contained' >←</Button>
-                  <h2 className="title">№{post.order}</h2>
-                  <Button onClick={e=>{updateOrderHandler(e, "right", post, Object.values(posts) )}} disabled={post.order===Object.values(posts).length} variant='contained' >→</Button>
-                </Stack>
-              </Card>
-            )
-          })
+          </Stack>
+
+          <Stack spacing={1} direction="row" sx={{width: "100%"}}>
+            <p className='text' style={{fontSize: "18px", alignSelf: "center"}}>Email:</p>
+            <input style={{fontSize: "18px", padding: "4px", borderRadius: "4px", flexGrow: 1}} defaultValue={contact.links.email} type="text" />
+            <Button onClick={(e)=>{setSocialLinkHandler(e, "email")}} variant='contained'>Save</Button>
+          </Stack>
+
+          <Stack spacing={1} direction="row" sx={{width: "100%"}}>
+            <p className='text' style={{fontSize: "18px", alignSelf: "center"}}>Instagram:</p>
+            <input style={{fontSize: "18px", padding: "4px", borderRadius: "4px", flexGrow: 1}} defaultValue={contact.links.instagram} type="text" />
+            <Button onClick={(e)=>{setSocialLinkHandler(e, "instagram")}} variant='contained'>Save</Button>
+          </Stack>
+
+          <Stack spacing={1} direction="row" sx={{width: "100%"}}>
+            <p className='text' style={{fontSize: "18px", alignSelf: "center"}}>OpenSea:</p>
+            <input style={{fontSize: "18px", padding: "4px", borderRadius: "4px", flexGrow: 1}} defaultValue={contact.links.opensea} type="text" />
+            <Button onClick={(e)=>{setSocialLinkHandler(e, "opensea")}} variant='contained'>Save</Button>
+          </Stack>
+
+          <Stack spacing={1} direction="row" sx={{width: "100%"}}>
+            <p className='text' style={{fontSize: "18px", alignSelf: "center"}}>Facebook:</p>
+            <input style={{fontSize: "18px", padding: "4px", borderRadius: "4px", flexGrow: 1}} defaultValue={contact.links.facebook} type="text" />
+            <Button onClick={(e)=>{setSocialLinkHandler(e, "facebook")}} variant='contained'>Save</Button>
+          </Stack>
+
+          <Stack spacing={1} direction="row" sx={{width: "100%"}}>
+            <p className='text' style={{fontSize: "18px", alignSelf: "center"}}>Behance:</p>
+            <input style={{fontSize: "18px", padding: "4px", borderRadius: "4px", flexGrow: 1}} defaultValue={contact.links.behance} type="text" />
+            <Button onClick={(e)=>{setSocialLinkHandler(e, "behance")}} variant='contained'>Save</Button>
+          </Stack>
+        </Stack>
         }
-        <Card>
-          <Button onClick={e=>{newPostHandler(e)}} sx={{flexDirection: "column", width: "100%"}}>
-            <Box sx={{fontSize: 72, margin: "50px", display: "flex", justifyContent: "center", alignItems: "center"}}>
-              +
-            </Box>
-            <CardContent style={{textTransform: "none"}}>
-              <Typography>
-                Add new post
-              </Typography>
-            </CardContent>
-          </Button>
-        </Card>
-      </Masonry>
-    </div>
+        
+        <h2 className="title">Main</h2>
+        <Masonry 
+        breakpointCols={{default: 3, 769: 2, 681: 1}}
+        className="edit__masonry masonry"
+        columnClassName="masonry__column"
+        >
+          {
+            Object.values(posts)
+            .sort((pst1, pst2)=>pst1.order-pst2.order)
+            .map((post, index)=>{
+              return (
+                <Card key={index}>
+                  <Link to={`/edit/${post.uid}`}>
+                    <CardMedia
+                      component="img"
+                      image={
+                        post.subposts && Object.values(post.subposts).find(subpost=>subpost.order===1).images ?
+                        Object.values(Object.values(post.subposts).find(subpost=>subpost.order===1).images).find(img=>img.order===1).url:
+                        require("../Images/MissingImage.png")
+                      }
+                    />
+                    <CardContent>
+                      <p className='title'>
+                        {post.name}
+                      </p>
+                    </CardContent>
+                  </Link>
+                  <Stack direction="row" sx={{justifyContent: "space-between", alignItems: "center"}}>
+                    <Button onClick={e=>{updateOrderHandler(e, "left", post, Object.values(posts) )}} disabled={post.order===1} variant='contained' >←</Button>
+                    <h2 className="title">№{post.order}</h2>
+                    <Button onClick={e=>{updateOrderHandler(e, "right", post, Object.values(posts) )}} disabled={post.order===Object.values(posts).length} variant='contained' >→</Button>
+                  </Stack>
+                </Card>
+              )
+            })
+          }
+          <Card>
+            <Button onClick={e=>{newPostHandler(e)}} sx={{flexDirection: "column", width: "100%"}}>
+              <Box sx={{fontSize: 72, margin: "50px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                +
+              </Box>
+              <CardContent style={{textTransform: "none"}}>
+                <Typography>
+                  Add new post
+                </Typography>
+              </CardContent>
+            </Button>
+          </Card>
+        </Masonry>
+      </div>
 
     </section>
   )

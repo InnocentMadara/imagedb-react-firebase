@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getInfo } from './firebase';
 import PageNotFound from './PageNotFound';
+import Masonry from 'react-masonry-css';
 
 export default function Post() {
-  const {title} = useParams();
+  const {uid} = useParams();
   const [post, setPost] = useState({});
   const [value, setValue] = useState(0);
 
   useMemo(()=>{
     getInfo(`/Posts/`, (posts)=>{
       let post = Object.values(posts).find(post=>{
-        return post.uid === title
+        return post.uid === uid
       });
       setPost(post);
     });
@@ -25,40 +26,36 @@ export default function Post() {
     ?
     <></>
     :
-    <article className='post'>
+    <div className="post">
       <div className="post__container">
-        <div className="post__image-wrapper">
-          <div className="post__image-block">
+        <Masonry
+          breakpointCols={{default: 3, 769: 2, 681: 1}}
+          className="main__masonry masonry"
+          columnClassName="masonry__column">
           {
-            post.images && Object.values(post.images)
-            .sort((image1, image2)=>{
-              return image1.order - image2.order;
-            })
-            .map((image, index)=>{
-              return <img className='post__image' key={index} src={ image.url } alt="" />
-            })
+            post.subposts && Object.values(post.subposts)
+            .sort((post1,post2)=>post1.order-post2.order)
+            .map(subpost=>{
+            return (
+              <Link
+                className="post-preview masonry__item"
+                to={`${subpost.uid}`}
+                key={subpost.uid}
+                >
+                <img className="post-preview__image" src={
+                  subpost.images?
+                  Object.values(subpost.images).find(img=>img.order===1).url
+                  : require("../Images/MissingImage.png")
+                } alt=""/>
+                <h2 className="post-preview__name">
+                  {subpost.name}
+                </h2>
+              </Link>
+            )}) 
           }
-          </div>
-        </div>
-        <div className="post__text-block">
-          <h2 className="post__name">
-            {post.name}
-          </h2>
-          <div className="post__texts">
-            {
-              post.texts && Object.values(post.texts)
-              .sort((txt1, txt2)=>txt1.order-txt2.order)
-              .map((text, index)=>{ return(
-                <p key={text.uid} className={"post__text "+text.type}>
-                  {text.content}
-                </p>)
-              })
-            }
-          </div>
-        </div>
+        </Masonry>
       </div>
-    </article>
-
+    </div>
     :
 
     <PageNotFound />

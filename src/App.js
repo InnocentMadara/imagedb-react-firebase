@@ -17,6 +17,8 @@ import './Styles/Footer.scss';
 import Login from './Components/Login';
 import Post from './Components/Post';
 import EditItem from './Components/EditItem';
+import SubPost from './Components/SubPost';
+import EditPost from './Components/EditPost';
 
 function App() {
   const [user, setUser] = useState();
@@ -137,12 +139,16 @@ function App() {
       </header>
       <Routes>
         <Route path="/" element={<Main isEdit={isEdit} />} ></Route>
-        <Route path="/:title" element={<Post isEdit={isEdit} />} ></Route>
+        <Route path="/:uid" element={<Post isEdit={isEdit} />} ></Route>
+        <Route path="/:uid/:subUid" element={<SubPost isEdit={isEdit} />} />
         {
           user && <Route path="edit" element={<Edit isEdit={isEdit} />} ></Route>
         }
         {
-          user && <Route path="edit/:title" element={<EditItem isEdit={isEdit} />} ></Route>
+          user && <Route path="edit/:uid" element={<EditPost isEdit={isEdit} />} ></Route>
+        }
+        {
+          user && <Route path="edit/:uid/:subUid" element={<EditItem isEdit={isEdit} />} ></Route>
         }
         <Route path="about" element={<About isEdit={isEdit} />} />
         <Route path="contact" element={<Contact isEdit={isEdit} />} />
@@ -154,9 +160,6 @@ function App() {
           <p className="footer__text">
               © Copyright 2023 Alex Kutsalo. All rights reserved.
           </p>
-          <Link style={{position: "absolute", right: 20, bottom: 75, transform: "translateX(-50%)"}} to="/login">
-            <img src={require("./Images/signup.png")} alt="" />
-          </Link>
         </div>
       </footer>
     </>
